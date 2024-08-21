@@ -1,4 +1,3 @@
-# 시작
+# SSAFY Algorithm git
 
-### test
-### chichi왔다감
+> 2024.08.21 start
