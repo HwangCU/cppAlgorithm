@@ -9,48 +9,55 @@ int N;
 
 vector<int> v[51];
 int erase;
+int dat[51];
 int resultcount;
-int root;
 
 void dfs(int lev) {
-    bool isLeaf = true; // 리프 노드인지 확인
 
-    for (int k : v[lev]) {
-        if (k == erase) {
-            continue;
-        }
-        isLeaf = false; // 자식이 하나라도 있으면 리프 노드가 아님
-        dfs(k);
-    }
-
-    if (isLeaf) { // 모든 자식이 erase 또는 없는 경우 리프 노드로 간주
+	bool isleaf = true;
+	for (int k : v[lev])//erase에 연결된거 다지워
+	{
+		if (k == erase) {//지울노드는 가지않는다.
+			continue;
+		}
+        isleaf=false;
+		dfs(k);
+	}
+    if(isleaf){
         resultcount++;
     }
 }
 
 int main() {
-    //freopen("input.txt", "r", stdin);
-    cin >> N;
+	//freopen("input.txt", "r", stdin);
+	cin >> N;
+    int root =0;
+	for (int i = 0; i < N; i++)
+	{
+		int temp;
+		cin >> temp;
+		if (temp ==-1) {
+            root=i;
+			continue;
+		}
+		if (temp==-1) {//부모가없다면 루트가주어진다
+			resultcount++;
+			continue;
+		}
+		v[temp].push_back(i);
+	}
+	cin >> erase;
 
-    for (int i = 0; i < N; i++) {
-        int temp;
-        cin >> temp;
-        if (temp == -1) {
-            root = i; // 루트 노드를 저장
-            continue;
-        }
-        v[temp].push_back(i);
-    }
-    cin >> erase;
+	if (erase == root) {
+		cout << "0";
+		return 0;
+	}
 
-    if (erase == root) { // 루트 노드를 지우면 전체 트리가 삭제됨
-        cout << "0";
-        return 0;
-    }
+	dfs(root);
 
-    dfs(root);
 
-    cout << resultcount;
+	cout << resultcount;
+	
 
-    return 0;
+
 }
